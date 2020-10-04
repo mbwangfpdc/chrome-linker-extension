@@ -11,6 +11,9 @@
         "48": "logo48.png",
         "128": "logo128.png"
     },
+    "web_accessible_resources": [
+        "data/users.json"
+    ],
     "permissions": ["contextMenus", "tabs"],
     "manifest_version": 2
 }
