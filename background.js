@@ -20,11 +20,7 @@ let CODES = {
         return true;
     }
 }
-let users_json = {};
-(async function() { users_json = await(fetch(chrome.runtime.getURL('data/users.json')).then((response) => response.json())); })();
-console.log(users_json["krishi"]);
-
-
+let USERS_JSON = {};
 
 chrome.contextMenus.onClicked.addListener(function (info) {
     let infoStr = String(info.selectionText).trim();
@@ -42,8 +38,8 @@ chrome.contextMenus.onClicked.addListener(function (info) {
             if (info.menuItemId[1] == "1") {
                 chrome.tabs.create({ "url": url + infoStr + ".1" });
             } else {
-                if (infoStr in users_json) {
-                    chrome.tabs.create({ "url": url + users_json[infoStr].join(".") + "." + info.menuItemId[1] });
+                if (infoStr in USERS_JSON) {
+                    chrome.tabs.create({ "url": url + USERS_JSON[infoStr].join(".") + "." + info.menuItemId[1] });
                 } else {
                     chrome.tabs.create({ "url": url + infoStr + "." + info.menuItemId[1] });
                 }
@@ -73,4 +69,5 @@ chrome.runtime.onInstalled.addListener(function () {
     for (let i = 0; i <= N_482_PROJECTS; i++) {
         chrome.contextMenus.create({ "title": "p" + i, "id": "p" + i, "contexts": ["selection"]});
     }
+    fetch(chrome.runtime.getURL('data/users.json')).then((response) => response.json()).then((data) => {USERS_JSON = data});
 });
